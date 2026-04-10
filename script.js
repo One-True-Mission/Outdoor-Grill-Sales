@@ -58,7 +58,7 @@ function initCatalogFilter() {
 
   // Catalog page uses .catalog-brand-card with data-category
   // Brands page uses .brand-card with data-type
-  const cards = document.querySelectorAll('.catalog-brand-card, .brand-card');
+  const cards = document.querySelectorAll('.catalog-brand-card, .brand-card, .explore-brand-card');
   if (!cards.length) return;
 
   filterBtns.forEach(btn => {
