@@ -1,36 +1,6 @@
 /* ============================================================
    OUTDOOR GRILL SALES — nav.js
-   Shared navigation logic for all pages
    ============================================================ */
-
-/* ─────────────────────────────────────────────
-   RELOCATION NOTICE
-   Set to true when Michael moves to new location.
-   Change the message and set to false to hide.
-   ───────────────────────────────────────────── */
-const SHOW_RELOCATION_BANNER = true;
-const RELOCATION_MESSAGE = 'Exciting news! Outdoor Grill Sales is relocating soon. Stay tuned for our new address.';
-
-/* ─────────────────────────────────────────────
-   ANNOUNCEMENT BANNER
-   ───────────────────────────────────────────── */
-function initBanner() {
-  const banner = document.getElementById('announce-banner');
-  if (!banner) return;
-
-  if (SHOW_RELOCATION_BANNER) {
-    banner.style.display = 'block';
-    banner.querySelector('.banner-text').textContent = RELOCATION_MESSAGE;
-
-    // offset nav top
-    const nav = document.querySelector('nav');
-    if (nav) {
-      nav.style.top = banner.offsetHeight + 'px';
-    }
-  } else {
-    banner.style.display = 'none';
-  }
-}
 
 /* ─────────────────────────────────────────────
    NAV SCROLL BEHAVIOR
@@ -46,25 +16,18 @@ function initNavScroll() {
     const scrolled = window.scrollY;
     const total = document.body.scrollHeight - window.innerHeight;
 
-    // Scrolled state
     if (scrolled > 60) {
       nav.classList.add('scrolled');
     } else {
       nav.classList.remove('scrolled');
     }
 
-    // Progress bar
     if (progressBar) {
       progressBar.style.width = (scrolled / total * 100) + '%';
     }
 
-    // Back to top
     if (backTop) {
-      if (scrolled > 400) {
-        backTop.classList.add('visible');
-      } else {
-        backTop.classList.remove('visible');
-      }
+      backTop.classList.toggle('visible', scrolled > 400);
     }
   });
 }
@@ -80,7 +43,6 @@ function initHamburger() {
 
   hamburger.addEventListener('click', () => {
     const isOpen = hamburger.classList.contains('open');
-
     if (isOpen) {
       hamburger.classList.remove('open');
       drawer.classList.remove('open');
@@ -92,7 +54,6 @@ function initHamburger() {
     }
   });
 
-  // Close drawer on link click
   drawer.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('open');
@@ -101,7 +62,6 @@ function initHamburger() {
     });
   });
 
-  // Close on escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       hamburger.classList.remove('open');
@@ -113,23 +73,14 @@ function initHamburger() {
 
 /* ─────────────────────────────────────────────
    ACTIVE NAV LINK
-   Highlights the current page link in the nav
    ───────────────────────────────────────────── */
 function initActiveNav() {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-
   document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(link => {
     const href = link.getAttribute('href');
     if (!href) return;
-
     const linkPage = href.split('/').pop();
-
-    if (
-      linkPage === currentPage ||
-      (currentPage === '' && linkPage === 'index.html') ||
-      (currentPage === 'index.html' && linkPage === '') ||
-      (currentPage === 'index.html' && href === '#')
-    ) {
+    if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
       link.classList.add('active');
     }
   });
@@ -141,7 +92,6 @@ function initActiveNav() {
 function initReveal() {
   const reveals = document.querySelectorAll('.reveal');
   if (!reveals.length) return;
-
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -150,19 +100,51 @@ function initReveal() {
       }
     });
   }, { threshold: 0.1 });
-
   reveals.forEach(el => io.observe(el));
 }
 
 /* ─────────────────────────────────────────────
-   BACK TO TOP BUTTON
+   BACK TO TOP
    ───────────────────────────────────────────── */
 function initBackTop() {
   const btn = document.getElementById('back-top');
   if (!btn) return;
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
 
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+/* ─────────────────────────────────────────────
+   REVIEWS CAROUSEL
+   ───────────────────────────────────────────── */
+function initReviewsCarousel() {
+  const track = document.getElementById('reviews-track');
+  const dots = document.querySelectorAll('.reviews-carousel-dot');
+  if (!track) return;
+
+  const cards = track.querySelectorAll('.review-card');
+  const total = cards.length;
+  let current = 0;
+  let autoTimer = setInterval(next, 5500);
+
+  function goTo(n) {
+    current = (n + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    clearInterval(autoTimer);
+    autoTimer = setInterval(next, 5500);
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  document.getElementById('reviews-next')?.addEventListener('click', next);
+  document.getElementById('reviews-prev')?.addEventListener('click', prev);
+  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+  let touchStartX = 0;
+  track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
   });
 }
 
@@ -170,10 +152,10 @@ function initBackTop() {
    INIT ALL
    ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-  initBanner();
   initNavScroll();
   initHamburger();
   initActiveNav();
   initReveal();
   initBackTop();
+  initReviewsCarousel();
 });
