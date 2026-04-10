@@ -2823,3 +2823,199 @@ section,
     padding: 1.8rem 1.2rem !important;
   }
 }
+
+/* ============================================================
+   EXPLORE BRANDS PAGE — Card styles with product image
+   ============================================================ */
+
+.explore-brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.explore-brand-card {
+  background: rgba(26, 25, 24, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  transition: background 0.25s;
+  overflow: hidden;
+  position: relative;
+}
+
+.explore-brand-card:hover {
+  background: rgba(34, 33, 32, 0.92);
+}
+
+/* Product image area */
+.explore-brand-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--charcoal-3);
+  flex-shrink: 0;
+}
+
+.explore-brand-img-wrap img:first-child {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.explore-brand-card:hover .explore-brand-img-wrap img:first-child {
+  transform: scale(1.05);
+}
+
+/* Dark gradient overlay over image */
+.explore-brand-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(17,17,16,0.1) 0%,
+    rgba(17,17,16,0.5) 70%,
+    rgba(17,17,16,0.85) 100%
+  );
+  z-index: 1;
+}
+
+/* Brand logo sits over the image at bottom-left */
+.explore-brand-logo {
+  position: absolute !important;
+  bottom: 1rem;
+  left: 1.2rem;
+  height: 32px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  z-index: 2;
+  filter: brightness(0) invert(1) !important;
+  opacity: 0.92;
+  transition: opacity 0.2s !important;
+  max-width: 140px;
+}
+
+.explore-brand-card:hover .explore-brand-logo {
+  opacity: 1;
+}
+
+/* No-image fallback state */
+.explore-brand-img-wrap.no-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--charcoal-3);
+}
+
+.explore-brand-img-wrap.no-img img:first-child {
+  display: none;
+}
+
+.explore-brand-img-wrap.no-img .explore-brand-img-overlay {
+  display: none;
+}
+
+.explore-brand-img-wrap.no-img .explore-brand-logo {
+  position: static !important;
+  height: 44px !important;
+  filter: grayscale(0%) brightness(1) !important;
+  opacity: 0.7;
+  max-width: 160px;
+}
+
+/* Text body below image */
+.explore-brand-body {
+  padding: 1.6rem 1.8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex: 1;
+}
+
+.explore-brand-body h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text);
+}
+
+/* Tag pills */
+.explore-brand-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.explore-brand-tags span {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
+  border: 1px solid rgba(232,98,42,0.35);
+  padding: 0.18rem 0.55rem;
+  border-radius: 1px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.explore-brand-body p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.72;
+  font-weight: 300;
+  flex: 1;
+}
+
+.explore-brand-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+/* Top accent bar on hover */
+.explore-brand-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ember), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: 10;
+}
+
+.explore-brand-card:hover::before {
+  transform: scaleX(1);
+}
+
+@media (max-width: 900px) {
+  .explore-brands-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .explore-brand-img-wrap {
+    height: 200px;
+  }
+
+  .explore-brand-body {
+    padding: 1.4rem 1.2rem 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .explore-brand-img-wrap {
+    height: 180px;
+  }
+}
