@@ -3172,3 +3172,213 @@ section,
   left: 1.5rem;
   z-index: 2;
 }
+
+
+/* ============================================================
+   PATCH 9 — White boxes, store front zoom, stats transparency,
+              section padding reduction, remove page-hero bg
+   ============================================================ */
+
+/* ── 1. WHITE BOXES — NUCLEAR FIX ──
+   mix-blend-mode doesn't work reliably across all browsers
+   when the parent has backdrop-filter. Switch to a different
+   approach: hide the logo img entirely in the image wrap and
+   show a CSS-only brand name fallback, OR just make the pill
+   dark enough that the white logo reads against it cleanly.
+   The real fix: make the pill wider/taller and remove mix-blend-mode. */
+
+.explore-brand-logo {
+  mix-blend-mode: normal !important;
+  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,0.8)) !important;
+  opacity: 1 !important;
+  z-index: 3 !important;
+  bottom: 0.9rem !important;
+  left: 1rem !important;
+  height: 28px !important;
+  max-width: 130px !important;
+  background: transparent !important;
+  /* Force the image itself to be treated as transparent-bg */
+  image-rendering: crisp-edges;
+}
+
+/* The dark pill behind logo — make it tight and proportional */
+.explore-brand-img-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0.65rem;
+  left: 0.75rem;
+  height: 40px;
+  width: 150px;
+  background: rgba(0, 0, 0, 0.72);
+  border-radius: 2px;
+  z-index: 2;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.explore-brand-img-wrap.no-img::after {
+  display: none !important;
+}
+
+/* ── 2. STORE FRONT IMAGE — give user a CSS variable to tune ──
+   object-position controls the crop. 
+   "center top" = show top of image (sign area)
+   "center 15%" = 15% from top
+   TUNE THIS: change the % to adjust what shows */
+
+.store-front-wrap {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1px solid var(--border) !important;
+  margin: 0 4rem !important;
+  /* HEIGHT: controls how much vertical space the image takes */
+  height: 320px !important;
+  max-height: 320px !important;
+}
+
+.store-front-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  /* ZOOM CONTROL: change this percentage to adjust crop position.
+     0% = very top of image
+     50% = center of image  
+     Try values between 5% and 25% to show the sign */
+  object-position: center 8% !important;
+  display: block !important;
+}
+
+@media (max-width: 900px) {
+  .store-front-wrap {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 220px !important;
+    max-height: 220px !important;
+  }
+
+  .store-front-wrap img {
+    object-position: center 8% !important;
+  }
+}
+
+/* ── 3. STATS BAND — transparent with ember trim ── */
+
+/* Remove the solid dark background from the stats section wrapper */
+section[style*="background:var(--charcoal-2)"][style*="border-top"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* The stat grid wrapper */
+.hero-stats,
+[style*="grid-template-columns:repeat(auto-fit, minmax(160px"] {
+  background: rgba(17, 17, 16, 0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--border-warm) !important;
+  border-top: 3px solid var(--ember) !important;
+  box-shadow: 0 0 40px rgba(232, 98, 42, 0.08) !important;
+}
+
+/* Individual stat cells */
+.hero-stat {
+  background: transparent !important;
+  position: relative;
+}
+
+.hero-stat::before {
+  background: linear-gradient(90deg, var(--ember), var(--gold)) !important;
+  box-shadow: 0 0 10px rgba(232,98,42,0.4) !important;
+}
+
+/* ── 4. SECTION PADDING — reduce by 35% across all pages ──
+   Base was 6rem 4rem → 35% less = 3.9rem 2.6rem → round to 4rem 2.6rem */
+
+section {
+  padding: 3.9rem 2.6rem !important;
+}
+
+/* Keep catalog filter full width */
+.catalog-filter {
+  padding: 0.85rem 2.6rem !important;
+}
+
+/* Inline sections with padding:4rem or padding:5rem */
+/* These are handled via !important overrides in mobile patch already.
+   We target the most common inline style values: */
+
+/* Page hero reduced */
+.page-hero {
+  padding: 3.25rem 2.6rem 2.25rem !important;
+}
+
+/* Service blocks keep their internal spacing */
+.service-block-content {
+  padding: 2.3rem !important;
+}
+
+.about-story-content {
+  padding: 2.6rem !important;
+}
+
+.contact-info-panel {
+  padding: 2.3rem !important;
+}
+
+.contact-form-panel {
+  padding: 2.3rem !important;
+}
+
+.footer-top {
+  padding: 2.6rem 2.6rem 2rem !important;
+}
+
+/* CTA band */
+.cta-band {
+  padding: 3.25rem 2.6rem !important;
+}
+
+/* Mobile section padding reduced proportionally */
+@media (max-width: 900px) {
+  section {
+    padding: 2.5rem 1.2rem !important;
+  }
+  .catalog-filter {
+    padding: 0.85rem 1.2rem !important;
+  }
+  .page-hero {
+    padding: 2rem 1.2rem 1.5rem !important;
+  }
+  .cta-band {
+    padding: 2.5rem 1.2rem !important;
+  }
+  .service-block-content {
+    padding: 1.5rem 1.2rem !important;
+  }
+  .about-story-content {
+    padding: 1.5rem 1.2rem !important;
+  }
+  .contact-info-panel,
+  .contact-form-panel {
+    padding: 1.5rem 1.2rem !important;
+  }
+  .footer-top {
+    padding: 2rem 1.2rem 1.5rem !important;
+  }
+}
+
+/* ── 5. REMOVE PAGE-HERO BACKGROUND IMAGE from all inner pages ──
+   The ::before pseudo-element was showing store-front.jpg faintly.
+   Remove it entirely so inner pages have no hero background image,
+   matching the clean look of the homepage. */
+
+.page-hero {
+  background: rgba(17, 17, 16, 0.88) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+.page-hero::before {
+  display: none !important;
+}
