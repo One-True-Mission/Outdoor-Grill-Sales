@@ -2347,3 +2347,479 @@ body.no-banner .page-top {
     margin: 0 1.5rem;
   }
 }
+
+/* ============================================================
+   PATCH 7 — COMPREHENSIVE MOBILE + NAV + LAYOUT FIXES
+   ============================================================ */
+
+/* ── 1. Hide banner permanently, nav always at top:0 ── */
+#announce-banner { display: none !important; }
+nav { top: 0 !important; }
+nav.has-banner { top: 0 !important; }
+.page-top { padding-top: 72px !important; }
+
+/* ── 2. Kill ALL horizontal scroll site-wide ── */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+* { max-width: 100%; }
+
+/* Every section and wrapper must stay within viewport */
+section,
+.catalog-category,
+.service-block,
+.about-story,
+.about-values,
+.contact-grid,
+.footer-top,
+.footer-bottom,
+.brand-strip-section,
+.services-strip,
+.about-preview,
+.reviews-section,
+.cta-band,
+.page-hero,
+.catalog-filter {
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+}
+
+/* ── 3. Mobile nav: center logo, push hamburger right ── */
+@media (max-width: 900px) {
+  nav {
+    display: grid !important;
+    grid-template-columns: 40px 1fr 40px !important;
+    align-items: center !important;
+    padding: 0 1.2rem !important;
+    height: 64px !important;
+  }
+
+  /* Empty first column for visual balance */
+  nav::before {
+    content: '';
+    display: block;
+    width: 40px;
+  }
+
+  .nav-logo {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    grid-column: 2 !important;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-hamburger {
+    display: flex !important;
+    grid-column: 3 !important;
+    justify-self: end !important;
+    margin-left: 0 !important;
+  }
+
+  .page-top { padding-top: 64px !important; }
+
+  /* ── 4. Full-width sections on mobile ── */
+  section {
+    padding: 3rem 1.2rem !important;
+    width: 100% !important;
+  }
+
+  .catalog-category { padding: 2.5rem 1.2rem !important; }
+  .catalog-filter { padding: 1rem 1.2rem !important; }
+  .brand-strip-section { padding: 2.5rem 1.2rem !important; }
+  .page-hero { padding: 3rem 1.2rem 2rem !important; }
+
+  /* Services strip full width */
+  .services-strip {
+    grid-template-columns: 1fr !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  /* About preview full width */
+  .about-preview {
+    grid-template-columns: 1fr !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .about-preview-content { padding: 1.8rem 1.2rem !important; }
+
+  /* Service blocks full width */
+  .service-block {
+    grid-template-columns: 1fr !important;
+    margin: 0 0 1px !important;
+    width: 100% !important;
+    direction: ltr !important;
+  }
+  .service-block.reverse { direction: ltr !important; }
+  .service-block-img { min-height: 220px !important; }
+  .service-block-content { padding: 1.8rem 1.2rem !important; }
+
+  /* About story full width */
+  .about-story {
+    grid-template-columns: 1fr !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .about-story-img { min-height: 280px !important; }
+  .about-story-content { padding: 1.8rem 1.2rem !important; }
+
+  /* About values full width */
+  .about-values {
+    grid-template-columns: 1fr !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Store front full width */
+  .store-front-wrap {
+    margin: 0 !important;
+    height: 200px !important;
+    width: 100% !important;
+  }
+
+  /* Contact grid full width */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .contact-info-panel {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 1.8rem 1.2rem !important;
+  }
+  .contact-form-panel { padding: 1.8rem 1.2rem !important; }
+
+  /* Brands grid 1 col on small mobile */
+  .brands-grid {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+
+  /* Footer full width */
+  .footer-top {
+    grid-template-columns: 1fr !important;
+    padding: 2.5rem 1.2rem 2rem !important;
+    gap: 2rem !important;
+  }
+  .footer-bottom {
+    padding: 1.2rem !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Form rows stack */
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero stats wrap */
+  .hero-stats {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0 !important;
+  }
+  .hero-stat {
+    padding: 0.9rem 0.5rem !important;
+    min-width: 0 !important;
+  }
+  .hero-stat-num { font-size: 1.4rem !important; }
+  .hero-stat-label { font-size: 0.45rem !important; letter-spacing: 0.08em !important; }
+
+  /* Reviews grid 1 col */
+  .reviews-grid { grid-template-columns: 1fr !important; }
+
+  /* Map full width */
+  .contact-map { margin: 0 !important; }
+
+  /* Inline section padding overrides */
+  section[style*="padding"] {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+  }
+
+  /* Fix any inline margin:0 4rem patterns */
+  [style*="margin: 0 4rem"],
+  [style*="margin:0 4rem"] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  .cta-band { padding: 3.5rem 1.2rem !important; }
+
+  /* Product grid 1 col on small screens */
+  .product-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── 5. Store front PC fix ── */
+/* Removed inline height, let the image breathe */
+.store-front-wrap {
+  height: auto !important;
+  max-height: 420px !important;
+  margin: 0 4rem !important;
+  overflow: hidden !important;
+  border: 1px solid var(--border) !important;
+  position: relative !important;
+}
+
+.store-front-wrap img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 420px !important;
+  object-fit: cover !important;
+  object-position: center 20% !important;
+  display: block !important;
+}
+
+@media (max-width: 900px) {
+  .store-front-wrap {
+    margin: 0 !important;
+    max-height: 240px !important;
+  }
+  .store-front-wrap img {
+    max-height: 240px !important;
+  }
+}
+
+/* ── 6. Reviews carousel styles ── */
+.carousel-section { background: var(--charcoal-2); }
+
+.reviews-carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-top: 3rem;
+}
+
+.reviews-carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reviews-carousel-track .review-card {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 2.5rem 3rem;
+  background: rgba(34, 33, 32, 0.82) !important;
+  border: none !important;
+}
+
+.reviews-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: rgba(24, 24, 23, 0.88);
+}
+
+.reviews-carousel-dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.reviews-carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+  padding: 0;
+}
+
+.reviews-carousel-dot.active {
+  background: var(--ember);
+  transform: scale(1.4);
+}
+
+.reviews-carousel-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reviews-carousel-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 2px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.reviews-carousel-btn:hover {
+  border-color: var(--ember);
+  color: var(--ember);
+  background: var(--ember-glow);
+}
+
+@media (max-width: 900px) {
+  .reviews-carousel-wrap .review-card {
+    padding: 2rem 1.5rem !important;
+  }
+}
+
+/* ── 7. Catalog page: brand-only cards ── */
+.catalog-brand-card {
+  background: rgba(26, 25, 24, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.catalog-brand-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--ember);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.catalog-brand-card:hover {
+  background: rgba(34, 33, 32, 0.90);
+}
+
+.catalog-brand-card:hover::before {
+  transform: scaleX(1);
+}
+
+.catalog-brand-card-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.catalog-brand-card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.catalog-brand-card .brand-type-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
+  border: 1px solid rgba(232,98,42,0.3);
+  padding: 0.2rem 0.55rem;
+  border-radius: 1px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.catalog-brand-card p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-weight: 300;
+  flex: 1;
+}
+
+.catalog-brand-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.btn-catalog {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--ember);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  text-decoration: none;
+}
+
+.btn-catalog:hover {
+  background: var(--ember-light);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.btn-catalog-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 0.6rem 1.2rem;
+  border-radius: 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, transform 0.15s;
+  text-decoration: none;
+}
+
+.btn-catalog-ghost:hover {
+  color: var(--text);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+
+.catalog-brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 900px) {
+  .catalog-brands-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .catalog-brand-card {
+    padding: 1.8rem 1.2rem !important;
+  }
+}
