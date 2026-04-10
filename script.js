@@ -1,12 +1,11 @@
 /* ============================================================
    OUTDOOR GRILL SALES — script.js
-   Page-specific interactions (forms, filters, catalog)
+   Page-specific interactions
    ============================================================ */
 
 /* ─────────────────────────────────────────────
-   CONTACT FORM SUBMISSION (Formspree)
+   CONTACT FORM (Formspree)
    Replace YOUR_FORM_ID with Michael's Formspree ID
-   Sign up free at formspree.io
    ───────────────────────────────────────────── */
 const FORMSPREE_ID = 'YOUR_FORM_ID';
 
@@ -16,7 +15,6 @@ function initContactForm() {
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-
     const submitBtn = form.querySelector('.form-submit');
     const successMsg = document.getElementById('form-success');
 
@@ -47,14 +45,21 @@ function initContactForm() {
 }
 
 /* ─────────────────────────────────────────────
-   CATALOG CATEGORY FILTER
-   Filters product sections by category tag
+   MULTI-CATEGORY FILTER
+   Works on both catalog.html and brands.html.
+   Cards use space-separated data-category or data-type values
+   e.g. data-category="grills smokers pizza"
+   The filter checks if the selected category appears
+   anywhere in that space-separated list.
    ───────────────────────────────────────────── */
 function initCatalogFilter() {
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const categories = document.querySelectorAll('.catalog-category');
+  if (!filterBtns.length) return;
 
-  if (!filterBtns.length || !categories.length) return;
+  // Catalog page uses .catalog-brand-card with data-category
+  // Brands page uses .brand-card with data-type
+  const cards = document.querySelectorAll('.catalog-brand-card, .brand-card');
+  if (!cards.length) return;
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -64,67 +69,41 @@ function initCatalogFilter() {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Show/hide categories
-      categories.forEach(cat => {
-        if (target === 'all' || cat.dataset.category === target) {
-          cat.style.display = 'block';
+      // Show/hide cards
+      cards.forEach(card => {
+        // Read whichever attribute exists
+        const cats = (card.dataset.category || card.dataset.type || '').split(' ');
+
+        if (target === 'all' || cats.includes(target)) {
+          card.style.display = 'flex';
+          card.style.flexDirection = 'column';
         } else {
-          cat.style.display = 'none';
+          card.style.display = 'none';
         }
       });
-
-      // Scroll to top of catalog
-      const catalogSection = document.getElementById('catalog-start');
-      if (catalogSection) {
-        catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
     });
   });
 }
 
 /* ─────────────────────────────────────────────
-   PRODUCT CARD "CALL FOR PRICING" LINK
-   Pre-fills the contact form with product interest
-   ───────────────────────────────────────────── */
-function initProductCTA() {
-  document.querySelectorAll('.product-cta[data-product]').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      const product = this.dataset.product || '';
-      const category = this.dataset.category || '';
-
-      // Store interest in sessionStorage to pre-fill form on contact page
-      sessionStorage.setItem('ogs_product_interest', product);
-      sessionStorage.setItem('ogs_category_interest', category);
-
-      // Navigate to contact page
-      window.location.href = 'contact.html?interest=' + encodeURIComponent(product);
-    });
-  });
-}
-
-/* ─────────────────────────────────────────────
-   PRE-FILL FORM FROM URL PARAMS
-   Runs on contact.html if arriving from a product CTA
+   PRE-FILL CONTACT FORM FROM URL PARAMS
+   e.g. contact.html?interest=Blaze+Grills
    ───────────────────────────────────────────── */
 function initFormPrefill() {
   const params = new URLSearchParams(window.location.search);
   const interest = params.get('interest') || sessionStorage.getItem('ogs_product_interest');
-  const category = params.get('category') || sessionStorage.getItem('ogs_category_interest');
 
   if (interest) {
     const notesField = document.getElementById('field-notes');
     if (notesField && notesField.value === '') {
       notesField.value = `I am interested in: ${interest}`;
     }
-  }
 
-  if (category) {
-    const categoryField = document.getElementById('field-category');
-    if (categoryField) {
-      const options = Array.from(categoryField.options);
-      const match = options.find(o => o.value.toLowerCase().includes(category.toLowerCase()));
-      if (match) categoryField.value = match.value;
+    const typeField = document.getElementById('field-type');
+    if (typeField && interest.toLowerCase().includes('repair')) {
+      typeField.value = 'Grill Repair';
+    } else if (typeField && (interest.toLowerCase().includes('install') || interest.toLowerCase().includes('kitchen'))) {
+      typeField.value = 'Outdoor Kitchen Install';
     }
   }
 }
@@ -167,40 +146,11 @@ function initCounters() {
 }
 
 /* ─────────────────────────────────────────────
-   BRAND PAGE - FILTER BY TYPE
-   ───────────────────────────────────────────── */
-function initBrandFilter() {
-  const filterBtns = document.querySelectorAll('.brand-filter-btn');
-  const brandCards = document.querySelectorAll('.brand-card');
-
-  if (!filterBtns.length) return;
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.filter;
-
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      brandCards.forEach(card => {
-        if (target === 'all' || card.dataset.type === target) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
-}
-
-/* ─────────────────────────────────────────────
-   INIT ALL ON DOM READY
+   INIT ALL
    ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initCatalogFilter();
-  initProductCTA();
   initFormPrefill();
   initCounters();
-  initBrandFilter();
 });
