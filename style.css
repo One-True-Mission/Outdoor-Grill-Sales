@@ -4372,3 +4372,228 @@ footer {
   background: var(--ember-glow) !important;
   opacity: 0.6 !important;
 }
+
+
+/* ============================================================
+   PATCH 14 — Light mode cleanup:
+   1. Footer light
+   2. Background visible through sections (remove white wash)
+   3. Hero background visible
+   4. Service count boxes light
+   5. Store front — remove white space, text fully on image
+   6. Stat bars light
+   ============================================================ */
+
+/* ── FIX 1: Footer fully light ── */
+footer,
+footer .footer-top,
+footer .footer-bottom {
+  background: #EDEAE6 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.footer-top {
+  border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+.footer-bottom {
+  background: #E4E0DB !important;
+}
+
+/* ── FIX 2 & 3: Background visible through ALL sections ──
+   Remove the heavy rgba overlays that are washing out white.
+   Sections get very light semi-transparent backgrounds so
+   the hero image bleeds through subtly on light bg. */
+
+body::before {
+  opacity: 0.04 !important;
+}
+
+/* Remove all the aggressive backdrop-filter and heavy backgrounds */
+.marquee-strip,
+.brand-strip-section,
+.brand-wall-section,
+.reviews-section,
+.about-preview-content,
+.service-block-content,
+.about-story-content,
+.contact-info-panel,
+.contact-form-panel,
+.catalog-filter,
+.catalog-category,
+.page-hero,
+.footer-top,
+footer {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Light transparent backgrounds — let content breathe */
+.service-pillar {
+  background: rgba(245, 242, 238, 0.85) !important;
+  backdrop-filter: none !important;
+}
+
+.about-preview-content {
+  background: rgba(237, 234, 230, 0.88) !important;
+}
+
+.review-card,
+.reviews-carousel-track .review-card {
+  background: rgba(255, 255, 255, 0.82) !important;
+}
+
+.reviews-carousel-controls {
+  background: rgba(228, 224, 218, 0.92) !important;
+}
+
+.explore-brand-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+
+.explore-brand-card:hover {
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+.brand-wall-tile {
+  background: rgba(255, 255, 255, 0.80) !important;
+}
+
+.brand-wall-tile:hover {
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Hero: remove the heavy light overlay so background shows */
+.hero-overlay {
+  background: linear-gradient(
+    105deg,
+    rgba(245, 242, 238, 0.72) 0%,
+    rgba(245, 242, 238, 0.45) 55%,
+    rgba(212, 84, 30, 0.04) 100%
+  ) !important;
+}
+
+/* Page hero inner pages — minimal overlay */
+.page-hero {
+  background: rgba(245, 242, 238, 0.78) !important;
+  backdrop-filter: none !important;
+}
+
+/* Catalog filter */
+.catalog-filter {
+  background: rgba(237, 234, 230, 0.92) !important;
+}
+
+/* ── FIX 4: Service count boxes — light ── */
+.about-value {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+.about-value:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.about-value-num {
+  color: var(--ember) !important;
+  opacity: 0.5 !important;
+}
+
+.about-value h3 {
+  color: #1A1715 !important;
+}
+
+.about-value p {
+  color: #4A4540 !important;
+}
+
+/* The grid wrapper */
+div[style*="minmax(240px"] {
+  background: rgba(0,0,0,0.04) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-top: 2px solid var(--ember) !important;
+}
+
+/* ── FIX 5: Store front — full bleed, text fully on photo ── */
+.store-front-wrap {
+  margin: 0 !important;  /* Remove side margin so it's full width */
+  border: none !important;
+  border-radius: 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.store-front-wrap img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+}
+
+/* Gradient overlay — stronger so text at bottom is always readable */
+.store-front-overlay {
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(26, 23, 21, 0.55) 70%,
+    rgba(26, 23, 21, 0.82) 100%
+  ) !important;
+}
+
+/* Badge and text sit at bottom of image */
+.store-badge {
+  position: absolute !important;
+  bottom: 1.5rem !important;
+  left: 1.5rem !important;
+  z-index: 2 !important;
+  right: 1.5rem !important;
+}
+
+.store-badge .relocating-badge {
+  background: rgba(212, 84, 30, 0.9) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+.store-badge .relocating-badge::before {
+  background: #fff !important;
+}
+
+/* The "Weatherford TX" text — force white so it reads on photo */
+.store-badge > div:last-child {
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
+}
+
+/* ── FIX 6: Stat bars — light mode ── */
+.hero-stat {
+  background: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.hero-stats,
+[style*="grid-template-columns:repeat(auto-fit, minmax(160px"] {
+  background: rgba(255, 255, 255, 0.70) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(180,100,20,0.2) !important;
+  border-top: 3px solid var(--ember) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06) !important;
+}
+
+.hero-stat-num {
+  color: #1A1715 !important;
+  text-shadow: none !important;
+}
+
+.hero-stat-label {
+  color: var(--ember) !important;
+  text-shadow: none !important;
+}
