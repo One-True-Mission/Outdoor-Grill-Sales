@@ -3382,3 +3382,41 @@ section {
 .page-hero::before {
   display: none !important;
 }
+
+
+/* ============================================================
+   PATCH 10 — Brand logo moved into card body (not on image)
+   ============================================================ */
+
+/* ── Remove the dark pill that was behind the old logo ── */
+.explore-brand-img-wrap::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ── Kill all old logo-on-image styles ── */
+.explore-brand-logo {
+  display: none !important;
+}
+
+/* ── New logo in the text body ── */
+.explore-body-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  object-position: left center;
+  margin-bottom: 0.2rem;
+  /* Show full color — no filter needed */
+  filter: none;
+  opacity: 1;
+  /* If logo has white bg, we can at least constrain it */
+  background: transparent;
+}
+
+/* On hover, logo stays the same — no greyscale effect */
+.explore-brand-card:hover .explore-body-logo {
+  opacity: 1;
+  filter: none;
+}
