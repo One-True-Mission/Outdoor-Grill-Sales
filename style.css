@@ -3812,3 +3812,165 @@ div[style*="minmax(240px"] {
     box-sizing: border-box !important;
   }
 }
+
+
+/* ============================================================
+   PATCH 13 — Footer: tighter PC spacing, horizontal on mobile
+   ============================================================ */
+
+/* ── PC: Tighten everything up ── */
+.footer-top {
+  gap: 2rem !important;
+  padding: 2rem 2.6rem 1.8rem !important;
+}
+
+.footer-brand img {
+  height: 40px !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.footer-brand p {
+  font-size: 0.82rem !important;
+  line-height: 1.55 !important;
+  max-width: 220px !important;
+}
+
+.footer-col h4 {
+  font-size: 0.85rem !important;
+  margin-bottom: 0.7rem !important;
+  letter-spacing: 0.1em !important;
+}
+
+.footer-col ul {
+  gap: 0.35rem !important;
+}
+
+.footer-col ul a {
+  font-size: 0.78rem !important;
+}
+
+.footer-col .footer-contact-item {
+  font-size: 0.78rem !important;
+  margin-bottom: 0.3rem !important;
+  line-height: 1.5 !important;
+}
+
+.footer-social {
+  margin-top: 0.85rem !important;
+  gap: 0.5rem !important;
+}
+
+.footer-social a {
+  width: 30px !important;
+  height: 30px !important;
+  font-size: 0.72rem !important;
+}
+
+.footer-bottom {
+  padding: 0.9rem 2.6rem !important;
+}
+
+.footer-copy {
+  font-size: 0.7rem !important;
+}
+
+/* ── MOBILE: Keep horizontal 2x2 grid instead of stacking ── */
+@media (max-width: 900px) {
+  footer {
+    overflow: hidden;
+  }
+
+  .footer-top {
+    /* 2 columns on mobile — brand+nav left, services+visit right */
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.2rem 1.5rem !important;
+    padding: 1.5rem 1.2rem 1.2rem !important;
+  }
+
+  /* Brand takes full width across both columns */
+  .footer-brand {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    padding-bottom: 0.8rem !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .footer-brand img {
+    height: 36px !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .footer-brand p {
+    font-size: 0.75rem !important;
+    max-width: none !important;
+    margin: 0 !important;
+    line-height: 1.5 !important;
+  }
+
+  .footer-social {
+    margin-top: 0 !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
+
+  /* Each of the 3 columns (nav, services, visit) in 2-col layout */
+  .footer-col {
+    min-width: 0 !important;
+  }
+
+  .footer-col h4 {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .footer-col ul a,
+  .footer-col .footer-contact-item {
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .footer-col ul {
+    gap: 0.3rem !important;
+  }
+
+  .footer-col .footer-contact-item {
+    margin-bottom: 0.2rem !important;
+  }
+
+  /* Visit Us takes full width so address doesn't get cut */
+  .footer-col:last-child {
+    grid-column: 1 / -1 !important;
+    padding-top: 0.8rem !important;
+    border-top: 1px solid var(--border) !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem 1.5rem !important;
+  }
+
+  .footer-col:last-child h4 {
+    grid-column: 1 / -1 !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .footer-bottom {
+    padding: 0.9rem 1.2rem !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.4rem !important;
+  }
+
+  .footer-copy {
+    font-size: 0.65rem !important;
+  }
+
+  .footer-bottom-links {
+    gap: 1rem !important;
+  }
+
+  .footer-bottom-links a {
+    font-size: 0.65rem !important;
+  }
+}
