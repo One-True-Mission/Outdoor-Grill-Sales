@@ -10,21 +10,21 @@
    CSS VARIABLES
    ───────────────────────────────────────────── */
 :root {
-  --ember:        #E8622A;
-  --ember-light:  #F07848;
-  --ember-dim:    #A04018;
-  --ember-glow:   rgba(232, 98, 42, 0.15);
-  --gold:         #C8922A;
-  --gold-light:   #DBA840;
-  --charcoal:     #111110;
-  --charcoal-2:   #1A1918;
-  --charcoal-3:   #222120;
-  --charcoal-4:   #2C2B29;
-  --smoke:        #3A3835;
-  --border:       rgba(255, 255, 255, 0.07);
-  --border-warm:  rgba(200, 146, 42, 0.2);
-  --text:         #F5F0E8;
-  --text-muted:   #B8B0A4;
+  --ember:        #D4541E;
+  --ember-light:  #E8622A;
+  --ember-dim:    #A03A10;
+  --ember-glow:   rgba(212, 84, 30, 0.10);
+  --gold:         #B07818;
+  --gold-light:   #C88C28;
+  --charcoal:     #F5F2EE;
+  --charcoal-2:   #EDEAE6;
+  --charcoal-3:   #E4E0DB;
+  --charcoal-4:   #D8D3CC;
+  --smoke:        #C8C2BA;
+  --border:       rgba(0, 0, 0, 0.08);
+  --border-warm:  rgba(180, 100, 20, 0.2);
+  --text:         #1A1715;
+  --text-muted:   #4A4540;
   --text-dim:     #807870;
   --white:        #FFFFFF;
 }
@@ -3973,4 +3973,402 @@ div[style*="minmax(240px"] {
   .footer-bottom-links a {
     font-size: 0.65rem !important;
   }
+}
+
+
+/* ============================================================
+   LIGHT THEME OVERRIDES
+   Catches hardcoded rgba dark values that variables won't fix
+   ============================================================ */
+
+/* Body and base */
+body {
+  background: #F5F2EE !important;
+}
+
+body::before {
+  background-image: url('assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.06 !important;
+}
+
+/* Nav */
+nav {
+  background: rgba(245, 242, 238, 0.96) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+nav.scrolled {
+  background: rgba(245, 242, 238, 0.99) !important;
+}
+
+.nav-links a {
+  color: #4A4540 !important;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--ember) !important;
+  background: rgba(0,0,0,0.04) !important;
+}
+
+/* Hamburger bars */
+.nav-hamburger span {
+  background: #1A1715 !important;
+}
+
+/* Mobile drawer */
+.nav-drawer {
+  background: #EDEAE6 !important;
+}
+
+.nav-drawer a {
+  color: #4A4540 !important;
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+
+.nav-drawer a:first-child {
+  border-top-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Hero overlay — lighter so background shows warmly */
+.hero-overlay {
+  background: linear-gradient(
+    105deg,
+    rgba(245, 242, 238, 0.88) 0%,
+    rgba(245, 242, 238, 0.70) 55%,
+    rgba(212, 84, 30, 0.06) 100%
+  ) !important;
+}
+
+.hero-title .outline {
+  -webkit-text-stroke: 2px rgba(26, 23, 21, 0.25) !important;
+}
+
+.hero-bg-text {
+  -webkit-text-stroke: 1px rgba(0,0,0,0.04) !important;
+}
+
+/* Marquee */
+.marquee-strip {
+  background: #EDEAE6 !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+.marquee-item {
+  color: #4A4540 !important;
+}
+
+/* Service pillars */
+.service-pillar {
+  background: rgba(237, 234, 230, 0.90) !important;
+}
+
+.service-pillar:hover {
+  background: rgba(228, 224, 219, 0.95) !important;
+}
+
+/* Brand wall */
+.brand-wall-section {
+  background: rgba(237, 234, 230, 0.90) !important;
+}
+
+.brand-wall-tile {
+  background: rgba(245, 242, 238, 0.95) !important;
+}
+
+.brand-wall-tile:hover {
+  background: #FFFFFF !important;
+}
+
+/* About preview */
+.about-preview-content {
+  background: rgba(237, 234, 230, 0.92) !important;
+}
+
+/* Reviews */
+.reviews-section {
+  background: rgba(237, 234, 230, 0.85) !important;
+}
+
+.review-card {
+  background: rgba(245, 242, 238, 0.92) !important;
+}
+
+.review-card:hover {
+  background: #FFFFFF !important;
+}
+
+.reviews-carousel-track .review-card {
+  background: rgba(245, 242, 238, 0.95) !important;
+}
+
+.reviews-carousel-controls {
+  background: rgba(232, 228, 222, 0.95) !important;
+}
+
+.reviews-carousel-dot {
+  background: #C8C2BA !important;
+}
+
+.reviews-carousel-dot.active {
+  background: var(--ember) !important;
+}
+
+/* Page hero on inner pages */
+.page-hero {
+  background: rgba(237, 234, 230, 0.94) !important;
+}
+
+/* Catalog filter */
+.catalog-filter {
+  background: rgba(232, 228, 222, 0.95) !important;
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+
+.filter-btn {
+  border-color: rgba(0,0,0,0.12) !important;
+  color: #4A4540 !important;
+  background: rgba(245,242,238,0.8) !important;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--ember) !important;
+  color: #fff !important;
+  border-color: var(--ember) !important;
+}
+
+/* Explore brand cards */
+.explore-brand-card {
+  background: rgba(245, 242, 238, 0.92) !important;
+}
+
+.explore-brand-card:hover {
+  background: #FFFFFF !important;
+}
+
+.explore-brand-body h3 {
+  color: #1A1715 !important;
+}
+
+.explore-brand-body p {
+  color: #4A4540 !important;
+}
+
+.explore-brand-tags span {
+  color: var(--ember) !important;
+  border-color: rgba(212,84,30,0.3) !important;
+}
+
+/* Catalog brand cards */
+.catalog-brand-card {
+  background: rgba(245, 242, 238, 0.92) !important;
+}
+
+.catalog-brand-card:hover {
+  background: #FFFFFF !important;
+}
+
+/* Service blocks */
+.service-block-content {
+  background: rgba(237, 234, 230, 0.92) !important;
+}
+
+/* About */
+.about-story-content {
+  background: rgba(237, 234, 230, 0.92) !important;
+}
+
+.about-value {
+  background: rgba(237, 234, 230, 0.80) !important;
+}
+
+.about-value:hover {
+  background: rgba(245, 242, 238, 0.95) !important;
+}
+
+.about-hours-panel {
+  background: rgba(237, 234, 230, 0.92) !important;
+}
+
+/* Contact */
+.contact-info-panel {
+  background: rgba(237, 234, 230, 0.92) !important;
+}
+
+.contact-form-panel {
+  background: rgba(228, 224, 219, 0.92) !important;
+}
+
+.form-field {
+  background: rgba(245, 242, 238, 0.95) !important;
+}
+
+.form-field:focus-within {
+  background: #FFFFFF !important;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  color: #1A1715 !important;
+}
+
+.form-field label {
+  color: #807870 !important;
+}
+
+.form-submit-row {
+  background: rgba(232, 228, 222, 0.95) !important;
+}
+
+/* Hero stats */
+.hero-stat {
+  background: rgba(212, 84, 30, 0.07) !important;
+}
+
+/* Footer */
+footer {
+  background: #EDEAE6 !important;
+}
+
+.footer-top {
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+
+.footer-brand p {
+  color: #807870 !important;
+}
+
+.footer-col h4 {
+  color: #1A1715 !important;
+}
+
+.footer-col ul a,
+.footer-col .footer-contact-item {
+  color: #807870 !important;
+}
+
+.footer-col ul a:hover,
+.footer-col .footer-contact-item a:hover {
+  color: var(--ember) !important;
+}
+
+.footer-social a {
+  color: #807870 !important;
+  border-color: rgba(0,0,0,0.12) !important;
+}
+
+.footer-bottom {
+  background: rgba(232, 228, 222, 0.95) !important;
+}
+
+.footer-copy {
+  color: #807870 !important;
+}
+
+.footer-bottom-links a {
+  color: #807870 !important;
+}
+
+/* Progress bar stays ember */
+#progress-bar {
+  background: linear-gradient(90deg, var(--ember), var(--gold)) !important;
+}
+
+/* Back to top */
+#back-top {
+  background: var(--ember) !important;
+}
+
+/* Sections with inline dark backgrounds */
+.reviews-section,
+.services-section,
+.process-section,
+.contact-section {
+  background: rgba(237, 234, 230, 0.85) !important;
+}
+
+/* CTA band overlay stays dark for contrast */
+.cta-band::before {
+  background: rgba(26, 23, 21, 0.80) !important;
+}
+
+/* Product cards on explore */
+.product-card {
+  background: rgba(245, 242, 238, 0.92) !important;
+}
+
+.product-card:hover {
+  background: #FFFFFF !important;
+}
+
+.product-name {
+  color: #1A1715 !important;
+}
+
+/* Hours grid rows */
+.hours-row {
+  border-bottom-color: rgba(0,0,0,0.08) !important;
+}
+
+.hours-row .day {
+  color: #1A1715 !important;
+}
+
+.hours-row .time {
+  color: #4A4540 !important;
+}
+
+/* Section text */
+.section-title {
+  color: #1A1715 !important;
+}
+
+.section-subtitle {
+  color: #4A4540 !important;
+}
+
+/* Service includes bullets */
+.service-includes li {
+  color: #4A4540 !important;
+}
+
+/* Contact detail labels and values */
+.contact-detail-label {
+  color: #807870 !important;
+}
+
+.contact-detail-value {
+  color: #1A1715 !important;
+}
+
+/* Review blockquotes */
+.review-card blockquote {
+  color: #4A4540 !important;
+}
+
+.review-name {
+  color: #1A1715 !important;
+}
+
+.review-platform {
+  color: #807870 !important;
+}
+
+/* About preview blockquote */
+.about-preview-content blockquote {
+  color: #4A4540 !important;
+}
+
+.about-preview-content p {
+  color: #4A4540 !important;
+}
+
+/* Brand wall tiles on hover */
+.brand-wall-tile:hover::before {
+  background: var(--ember-glow) !important;
+  opacity: 0.6 !important;
 }
