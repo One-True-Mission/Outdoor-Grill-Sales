@@ -3420,3 +3420,96 @@ section {
   opacity: 1;
   filter: none;
 }
+
+
+/* ============================================================
+   PATCH 11 — 3 targeted fixes:
+   1. Contact page nav CTA active state (loses orange)
+   2. Services page heading text protection
+   3. About page store front square image fit
+   ============================================================ */
+
+/* ── FIX 1: Contact page Book Appointment button stays orange ──
+   When on contact.html the .nav-cta gets .active class applied
+   by initActiveNav() which overrides the orange background. */
+
+.nav-cta.active,
+.nav-links a.nav-cta.active {
+  background: var(--ember) !important;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+.nav-cta.active:hover {
+  background: var(--ember-light) !important;
+}
+
+/* ── FIX 2: Services headings — dark scrim behind text ──
+   The section titles on services.html sit over the background
+   image with no protection. Add a dark gradient behind the
+   section heading text blocks. */
+
+.service-block-content h2 {
+  text-shadow:
+    0 2px 12px rgba(0,0,0,0.9),
+    0 1px 4px rgba(0,0,0,0.8) !important;
+}
+
+/* The section heading block that reads "Grill Repair" and
+   "Outdoor Kitchen Installation" over the hero background */
+section > .section-label,
+section > .section-title,
+section > .section-subtitle {
+  text-shadow: 0 2px 12px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.7);
+}
+
+/* Grill Repair and Outdoor Kitchen headings specifically */
+#install ~ section .section-title,
+.page-top > section .section-title {
+  position: relative;
+}
+
+/* Dark pill behind the service section label + title block */
+.services-heading-wrap {
+  position: relative;
+  display: inline-block;
+  padding: 1.2rem 1.8rem 1.2rem 0;
+}
+
+.services-heading-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(17,17,16,0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+/* ── FIX 3: Store front — square image fit ──
+   Now that the image is square, we want it to display fully
+   without being cropped. Use a taller container and
+   object-fit: contain so the full square image shows. */
+
+.store-front-wrap {
+  height: auto !important;
+  max-height: none !important;
+  background: var(--charcoal-3) !important;
+}
+
+.store-front-wrap img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 480px !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+  background: var(--charcoal-3);
+}
+
+@media (max-width: 900px) {
+  .store-front-wrap img {
+    max-height: 320px !important;
+  }
+}
