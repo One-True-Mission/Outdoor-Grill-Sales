@@ -125,7 +125,7 @@ function initReviewsCarousel() {
   const cards = track.querySelectorAll('.review-card');
   const total = cards.length;
   let current = 0;
-  let autoTimer = setInterval(next, 5500);
+  let autoTimer = setInterval(next, 3500);
 
   function goTo(n) {
     current = (n + total) % total;
