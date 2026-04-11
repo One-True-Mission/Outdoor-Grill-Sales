@@ -3666,3 +3666,149 @@ section > .section-subtitle {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+/* ============================================================
+   PATCH 12 — Three fixes:
+   1. Service count boxes transparent on PC + mobile
+   2. Scroll reveal smooth on mobile (snap fix)
+   3. About page hours/location grid full width on mobile
+   ============================================================ */
+
+/* ── FIX 1: "Service You Can Count On" boxes — transparent ──
+   The about-value class needs a proper transparent background.
+   Multiple patches have tried this but the inline style on the
+   grid wrapper and the CSS cascade keep winning. Nuclear override. */
+
+.about-value,
+div[style*="minmax(240px"] .about-value,
+div[style*="minmax(240px, 1fr)"] .about-value {
+  background: rgba(17, 17, 16, 0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: none !important;
+}
+
+.about-value:hover {
+  background: rgba(26, 25, 24, 0.72) !important;
+}
+
+/* The grid wrapper itself also needs transparency */
+div[style*="minmax(240px"] {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--border-warm) !important;
+  border-top: 2px solid var(--ember) !important;
+}
+
+/* ── FIX 2: Mobile scroll reveal — smooth transition ──
+   iOS/Android disable CSS transitions triggered during scroll
+   for performance. The fix is to use will-change and ensure
+   the transition duration is long enough to be perceived,
+   and to use transform3d to force GPU compositing. */
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0) !important;
+  transition: opacity 0.65s ease, transform 0.65s ease !important;
+  will-change: opacity, transform;
+  /* Force GPU layer — prevents snap-in on mobile */
+  -webkit-transform: translate3d(0, 24px, 0);
+  -webkit-transition: opacity 0.65s ease, -webkit-transform 0.65s ease;
+}
+
+.reveal.visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* Delay classes */
+.reveal-delay-1 { transition-delay: 0.1s !important; -webkit-transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s !important; -webkit-transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s !important; -webkit-transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s !important; -webkit-transition-delay: 0.4s; }
+
+/* ── FIX 3: About page hours/location — stack on mobile ──
+   The 1fr 1fr grid overflows on mobile because both columns
+   have minimum content that won't shrink below ~300px each. */
+
+@media (max-width: 900px) {
+  /* Target the hours/location grid */
+  div[style*="grid-template-columns:1fr 1fr"][style*="max-width:900px"] {
+    grid-template-columns: 1fr !important;
+    display: block !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Each panel inside stacks and gets proper borders */
+  div[style*="grid-template-columns:1fr 1fr"][style*="max-width:900px"] > div {
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+  div[style*="grid-template-columns:1fr 1fr"][style*="max-width:900px"] > div:first-child {
+    border-top: none !important;
+  }
+
+  /* Make sure the button fills the width */
+  div[style*="grid-template-columns:1fr 1fr"][style*="max-width:900px"] .btn-primary {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Relocating badge wraps properly */
+  .relocating-badge {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+}
+
+
+/* ── About hours/location grid — proper class-based layout ── */
+.about-hours-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+.about-hours-panel {
+  background: rgba(26, 25, 24, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 2.5rem;
+}
+
+.about-location-panel {
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 900px) {
+  .about-hours-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .about-hours-panel {
+    padding: 1.8rem 1.2rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .about-location-panel {
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+  }
+
+  .about-hours-panel .btn-primary {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+}
