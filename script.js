@@ -21,7 +21,7 @@ function initContactForm() {
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
 
-    fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    fetch(`https://formspree.io/f/xgorezpy`, {
       method: 'POST',
       body: new FormData(form),
       headers: { 'Accept': 'application/json' }
