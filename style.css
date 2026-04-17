@@ -76,9 +76,49 @@ ul { list-style: none; }
 }
 
 /* ─────────────────────────────────────────────
-   ANNOUNCEMENT BANNER (hidden — toggle when needed)
+   ANNOUNCEMENT BANNER — transition / appointment-only notice
    ───────────────────────────────────────────── */
-#announce-banner { display: none !important; }
+#announce-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--ember);
+  color: #fff;
+  padding: 0.55rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(212,84,30,0.25);
+  flex-wrap: wrap;
+  line-height: 1.4;
+}
+
+#announce-banner .banner-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+  animation: blink 1.6s ease infinite;
+}
+
+#announce-banner .banner-text { display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+#announce-banner .banner-text strong { font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem; }
+#announce-banner a { color: #fff; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; font-weight: 600; white-space: nowrap; }
+#announce-banner a:hover { color: rgba(255,255,255,0.85); }
+#announce-banner .banner-sep { opacity: 0.55; padding: 0 0.35rem; }
+
+/* Push nav + page down by banner height — --banner-h set by nav.js */
+body.has-banner nav { top: var(--banner-h, 42px); }
+body.has-banner .page-top { padding-top: calc(72px + var(--banner-h, 42px)); }
+body.has-banner .hero { padding-top: calc(8rem + var(--banner-h, 42px)); }
+body.has-banner .catalog-filter { top: calc(60px + var(--banner-h, 42px)); }
 
 /* ─────────────────────────────────────────────
    NAVIGATION
@@ -96,7 +136,7 @@ nav {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(0,0,0,0.10);
-  transition: height 0.3s, background 0.3s;
+  transition: height 0.3s, background 0.3s, top 0.3s;
 }
 
 nav.scrolled {
@@ -911,6 +951,73 @@ section { padding: 4.5rem 2.6rem; }
 .page-hero-sub { font-family: 'Crimson Pro', serif; font-size: 1.15rem; color: var(--text-muted); font-style: italic; max-width: 560px; font-weight: 300; }
 
 /* ─────────────────────────────────────────────
+   APPOINTMENT CALLOUT (contact page transition notice)
+   ───────────────────────────────────────────── */
+.appointment-callout {
+  margin: 0 2.6rem 2.6rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--ember);
+  padding: 1.75rem 2rem;
+  border-radius: 2px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.appointment-callout-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--ember-glow);
+  border: 1px solid var(--border-warm);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.appointment-callout-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--ember);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.appointment-callout-body h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+  line-height: 1.1;
+}
+
+.appointment-callout-body h4 span { color: var(--ember); }
+
+.appointment-callout-body p {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.appointment-callout-body p a {
+  color: var(--ember);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.appointment-callout-body p a:hover { color: var(--ember-light); }
+
+/* ─────────────────────────────────────────────
    CATALOG FILTER TABS
    ───────────────────────────────────────────── */
 .catalog-filter {
@@ -1259,6 +1366,50 @@ section { padding: 4.5rem 2.6rem; }
 .hours-row .day { font-weight: 500; color: var(--text); }
 .hours-row .time { color: var(--text-muted); font-family: 'Crimson Pro', serif; font-size: 0.9rem; }
 
+/* By-appointment block — replaces the hours grid during transition */
+.hours-appointment-block {
+  padding: 1.75rem 1.5rem;
+  background: rgba(255,255,255,0.65);
+  border: 1px dashed var(--border-warm);
+  border-radius: 2px;
+  text-align: center;
+}
+
+.hours-appointment-block .appt-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ember);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.hours-appointment-block .appt-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  line-height: 1.05;
+  margin-bottom: 0.75rem;
+}
+
+.hours-appointment-block .appt-sub {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.hours-appointment-block .appt-sub a {
+  color: var(--ember);
+  font-weight: 500;
+  font-style: normal;
+  white-space: nowrap;
+}
+
 /* ─────────────────────────────────────────────
    CONTACT PAGE
    ───────────────────────────────────────────── */
@@ -1412,6 +1563,29 @@ footer {
 .footer-bottom-links a { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); transition: color 0.2s; }
 .footer-bottom-links a:hover { color: var(--ember); }
 
+/* Footer appointment badge replaces the tiny hours block */
+.footer-appt-badge {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--ember);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.footer-appt-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ember);
+  flex-shrink: 0;
+  animation: blink 1.6s ease infinite;
+}
+
 /* ─────────────────────────────────────────────
    MISC COMPONENTS
    ───────────────────────────────────────────── */
@@ -1493,6 +1667,28 @@ footer {
    RESPONSIVE — MOBILE (max-width: 900px)
    ───────────────────────────────────────────── */
 @media (max-width: 900px) {
+
+  /* Announcement banner */
+  #announce-banner {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+  #announce-banner .banner-text strong { font-size: 0.68rem; }
+  #announce-banner .banner-sep { display: none; }
+  /* Mobile banner height handled by --banner-h set in nav.js —
+     hero needs its own rule since it uses rem-based padding */
+  body.has-banner .hero { padding-top: calc(6rem + var(--banner-h, 58px)); }
+
+  /* Appointment callout */
+  .appointment-callout {
+    margin: 0 1.2rem 2rem;
+    padding: 1.4rem 1.3rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+  .appointment-callout-icon { margin: 0 auto; }
 
   /* Nav */
   nav {
